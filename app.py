@@ -46,14 +46,13 @@ if st.button("🔍 Load Data"):
     elif data_option == "Fetch Yahoo Finance" and stock_symbol:
         df = yf.download(stock_symbol, period="6mo")
     else:
-    try:
-        df = pd.read_csv("kaggle demo.csv")  
-        st.info("No file provided. Loaded demo dataset from repo.")
-        st.dataframe(df.head())
-    except FileNotFoundError:
-        st.warning("Please upload a file or enter a stock symbol.")
-        df = None
-
+        try:
+            df = pd.read_csv("kaggle demo.csv")  
+            st.info("No file provided. Loaded demo dataset from repo.")
+            st.dataframe(df.head())
+        except FileNotFoundError:
+            st.warning("Please upload a file or enter a stock symbol.")
+            df = None
 
     if df is not None:
         st.success("Data loaded successfully!")
