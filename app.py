@@ -29,7 +29,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Welcome code
-st.image("assets/welcome.gif", use_column_width=True)
+st.image("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGRheG9yZ3Zudnp4ZnpvNDBqY292cWt1M2hhejVlZ245ajJydHVwNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YRw676NBrmPeM/giphy.gif", use_column_width=True)
 st.title("📈 Welcome to Finance ML Explorer")
 st.markdown("Upload data or fetch stock info. Then walk through an ML pipeline.")
 
@@ -46,8 +46,14 @@ if st.button("🔍 Load Data"):
     elif data_option == "Fetch Yahoo Finance" and stock_symbol:
         df = yf.download(stock_symbol, period="6mo")
     else:
+    try:
+        df = pd.read_csv("kaggle demo.csv")  
+        st.info("No file provided. Loaded demo dataset from repo.")
+        st.dataframe(df.head())
+    except FileNotFoundError:
         st.warning("Please upload a file or enter a stock symbol.")
         df = None
+
 
     if df is not None:
         st.success("Data loaded successfully!")
