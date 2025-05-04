@@ -9,7 +9,7 @@ import io
 # Streamlit Page Config
 st.set_page_config(page_title="Finance ML App", layout="wide")
 
-# Themes (black, orange and purple)
+# Themes (black, orange, and purple)
 st.markdown("""
     <style>
         .stApp {
@@ -40,8 +40,13 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Welcome code
-st.image("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGRheG9yZ3Zudnp4ZnpvNDBqY292cWt1M2hhejVlZ245ajJydHVwNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YRw676NBrmPeM/giphy.gif", use_column_width=True)
+# Empty space before the title (optional if the title still appears below the image)
+st.empty()
+
+# Welcome code (Updated for layout)
+st.image("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGRheG9yZ3Zudnp4ZnpvNDBqY292cWt1M2hhejVlZ245ajJydHVwNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YRw676NBrmPeM/giphy.gif", use_container_width=True)
+
+# Title and description placed directly after the GIF
 st.title("📈 Welcome to Finance ML Explorer")
 st.markdown("""
     This app allows you to upload a dataset, fetch real-time stock data, and explore 
@@ -85,4 +90,3 @@ if 'results_df' in locals() or 'results_df' in globals():
         file_name="finance_ml_results.csv",
         mime="text/csv"
     )
-
