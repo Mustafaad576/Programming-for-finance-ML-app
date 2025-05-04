@@ -56,8 +56,9 @@ if st.button("🔍 Load Data"):
             df = None
 
     if df is not None:
-        # Ensure the index is datetime
+        # Ensure the index is datetime and print for debugging
         df.index = pd.to_datetime(df.index)
+        st.write("Data Types of Columns: ", df.dtypes)  # Debugging line
 
         # Check if 'Close' column exists
         if "Close" not in df.columns:
@@ -65,8 +66,11 @@ if st.button("🔍 Load Data"):
             st.stop()
 
         # Plot the graph
-        fig = px.line(df, x=df.index, y="Close", title="Stock Price Trend")
-        st.plotly_chart(fig)
+        try:
+            fig = px.line(df, x=df.index, y="Close", title="Stock Price Trend")
+            st.plotly_chart(fig)
+        except Exception as e:
+            st.error(f"Error plotting the graph: {e}")
 
         # Display the dataframe
         st.success("Data loaded successfully!")
