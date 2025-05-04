@@ -9,7 +9,7 @@ import io
 # Streamlit Page Config
 st.set_page_config(page_title="Finance ML App", layout="wide")
 
-# Themes (black, orange, and purple)
+# Themes 
 st.markdown("""
     <style>
         .stApp {
