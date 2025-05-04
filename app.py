@@ -29,7 +29,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Welcome code
-st.image("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGRheG9yZ3Zudnp4ZnpvNDBqY292cWt1M2hhejVlZ245ajJydHVwNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YRw676NBrmPeM/giphy.gif", use_column_width=True)
+st.image("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGRheG9yZ3Zudnp4ZnpvNDBqY292cWt1M2hhejVlZ245ajJydHVwNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YRw676NBrmPeM/giphy.gif", use_container_width=True)
 st.title("📈 Welcome to Finance ML Explorer")
 st.markdown("Upload data or fetch stock info. Then walk through an ML pipeline.")
 
@@ -47,7 +47,8 @@ if st.button("🔍 Load Data"):
         df = yf.download(stock_symbol, period="6mo")
     else:
         try:
-            df = pd.read_csv("kaggle demo.csv")  
+            # Attempt to load the demo dataset
+            df = pd.read_csv("kaggle demo.csv")
             st.info("No file provided. Loaded demo dataset from repo.")
             st.dataframe(df.head())
         except FileNotFoundError:
@@ -55,15 +56,18 @@ if st.button("🔍 Load Data"):
             df = None
 
     if df is not None:
-        st.success("Data loaded successfully!")
-        st.dataframe(df.head())
-
-        # Ensure index is datetime type for plotting
+        # Ensure the index is datetime
         df.index = pd.to_datetime(df.index)
 
-        # Stock Price Trend - Line Chart
-        st.subheader("📉 Stock Price Trend")
+        # Check if 'Close' column exists
+        if "Close" not in df.columns:
+            st.error("'Close' column not found in the dataset.")
+            st.stop()
+
+        # Plot the graph
         fig = px.line(df, x=df.index, y="Close", title="Stock Price Trend")
         st.plotly_chart(fig)
 
-        # Other visualizations or operations can go here as well
+        # Display the dataframe
+        st.success("Data loaded successfully!")
+        st.dataframe(df.head())
